@@ -19,12 +19,12 @@ module.exports = {
     var options = this.app.options.emberCliFontAwesome || { includeFontAwesomeAssets: true };
     if (options.includeFontAwesomeAssets) {
       app.import("vendor/font-awesome/css/font-awesome.css");
-      app.import("vendor/font-awesome/fonts/fontawesome-webfont.eot", { destDir: "fonts" });
-      app.import("vendor/font-awesome/fonts/fontawesome-webfont.svg", { destDir: "fonts" });
-      app.import("vendor/font-awesome/fonts/fontawesome-webfont.ttf", { destDir: "fonts" });
-      app.import("vendor/font-awesome/fonts/fontawesome-webfont.woff", { destDir: "fonts" });
-      app.import("vendor/font-awesome/fonts/fontawesome-webfont.woff2", { destDir: "fonts" });
-      app.import("vendor/font-awesome/fonts/FontAwesome.otf", { destDir: "fonts" });
+      app.import("vendor/font-awesome/fonts/fontawesome-webfont.eot", { destDir: "assets/fonts" });
+      app.import("vendor/font-awesome/fonts/fontawesome-webfont.svg", { destDir: "assets/fonts" });
+      app.import("vendor/font-awesome/fonts/fontawesome-webfont.ttf", { destDir: "assets/fonts" });
+      app.import("vendor/font-awesome/fonts/fontawesome-webfont.woff", { destDir: "assets/fonts" });
+      app.import("vendor/font-awesome/fonts/fontawesome-webfont.woff2", { destDir: "assets/fonts" });
+      app.import("vendor/font-awesome/fonts/FontAwesome.otf", { destDir: "assets/fonts" });
     }
   }
 };
