@@ -44,13 +44,14 @@ export default Ember.Component.extend({
   rotateCssClass: computed('rotate', function() {
     let rotate = this.get('rotate');
     if (rotate) {
-      return rotate.match(/^fa-rotate/) ? rotate : `fa-rotate-${rotate}`;
+      return rotate.toString().match(/^fa-rotate/) ? rotate : `fa-rotate-${rotate}`;
     }
   }),
 
   sizeCssClass: computed('size', function() {
     let size = this.get('size');
     if (size) {
+      size = size.toString();
       if (size.match(/^fa-/)) {
         return size;
       } else {
@@ -69,6 +70,7 @@ export default Ember.Component.extend({
   stackCssClass: computed('stack', function() {
     let stack = this.get('stack');
     if (stack) {
+      stack = stack.toString();
       if (stack.match(/^fa-/)) {
         return stack;
       } else {
