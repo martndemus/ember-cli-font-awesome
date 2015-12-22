@@ -594,6 +594,9 @@
       <li>{{fa-icon icon='youtube' fixedWidth=true}} <span class="name">youtube</span></li>
       <li>{{fa-icon icon='youtube-play' fixedWidth=true}} <span class="name">youtube-play</span></li>
       <li>{{fa-icon icon='youtube-square' fixedWidth=true}} <span class="name">youtube-square</span></li>
+      {{#link-to 'detail' tagName='li'}}
+        <li>{{fa-icon icon='circle' classNames='bubbles' tagName='a' click=(action 'trip' model bubbles=false)}}<span class="name">bubbles</span></li>
+      {{/link-to}}
     </ul>
   </div>
 </div>
