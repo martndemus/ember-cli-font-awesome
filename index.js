@@ -8,6 +8,7 @@ module.exports = {
   name: 'ember-font-awesome',
 
   init: function(app) {
+    this._super.init.apply(this, arguments);
     // Enable ES7 decorators via Babel
     // https://www.npmjs.com/package/ember-computed-decorators#setup-with-addon
     this.options = this.options || {};
