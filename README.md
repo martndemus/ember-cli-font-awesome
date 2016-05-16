@@ -263,6 +263,43 @@ var app = new EmberApp({
 });
 ```
 
+### Output path
+
+You can change the directory where the fonts are copied to using the following configuration:
+
+```js
+var app = new EmberApp({
+  'ember-font-awesome': {
+    fontsOutput: "/some/dir/"
+  }
+});
+```
+
+This is useful when you change the output paths for your ember app. By default, ember-font-awesome copies the font files to `/dist/fonts`. The addon produces a css file to load the fonts that will be included in the vendor css file and expect to find the fonts at `../fonts`. If the css directory is not at the same level as the fonts directory, the site won't load the fonts.
+
+For example, moving the css directory to `/dist/assets/css` would require the fonts directory to be `/dist/assets/fonts` and the configuration would look like this:
+
+```js
+var app = new EmberApp({
+    outputPaths: {
+        app: {
+            css: {
+                  app: "/assets/css/app-name.css",
+            },
+            js: "/assets/js/app-name.js",
+        },
+
+        vendor: {
+            css: "/assets/css/vendor.css",
+            js: "/assets/js/vendor.js",
+        },
+    },
+    'ember-font-awesome': {
+        fontsOutput: "/assets/fonts"
+    }
+});
+```
+
 ## License
 
 [Public Domain](UNLICENSE)

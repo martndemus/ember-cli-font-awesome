@@ -88,7 +88,7 @@ module.exports = {
       fs.readdirSync(fontsPath).forEach(function(fontFilename){
         target.import(
           path.join(fontsPath, fontFilename),
-          { destDir:'/fonts' }
+          { destDir: options.fontsOutput ? options.fontsOutput : '/fonts' }
         );
       });
     }
