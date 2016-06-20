@@ -31,6 +31,13 @@ const FaIconComponent = Ember.Component.extend({
     'style'
   ],
 
+  @computed('color')
+  @optional
+  style(color) {
+    if (!color) { return; }
+    return Ember.String.htmlSafe(`color:${color}`);
+  },
+
   @computed('icon', 'params.[]')
   iconCssClass(icon, params) {
     icon = icon || params[0];
