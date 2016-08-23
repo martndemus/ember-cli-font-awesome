@@ -27,8 +27,16 @@ const FaIconComponent = Ember.Component.extend({
 
   attributeBindings: [
     'ariaHiddenAttribute:aria-hidden',
-    'title'
+    'title',
+    'style'
   ],
+
+  @computed('color')
+  @optional
+  style(color) {
+    if (!color) { return; }
+    return Ember.String.htmlSafe(`color:${color}`);
+  },
 
   @computed('icon', 'params.[]')
   iconCssClass(icon, params) {

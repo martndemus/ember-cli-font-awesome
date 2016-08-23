@@ -1,4 +1,4 @@
-import Ember from 'ember';
+// import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -173,6 +173,12 @@ test('I can set the title attribute', function(assert) {
   this.render(hbs`{{fa-icon icon="fa-credit-card" title="foo bar"}}`);
   let $icon = this.$('i');
   assert.equal($icon.attr('title'), 'foo bar', "The title attribute of the <i> element should be 'foo bar'");
+});
+
+test('I can set the color', function(assert) {
+  this.render(hbs`{{fa-icon icon="fa-credit-card" color="#ff00ff"}}`);
+  let $icon = this.$('i');
+  assert.equal($icon.attr('style'), "color:#ff00ff", "The style attribute of the <i> element contains the right color");
 });
 
 test('I can alter the tagName of the icon', function(assert) {
