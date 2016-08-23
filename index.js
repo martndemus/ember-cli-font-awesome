@@ -1,6 +1,7 @@
 /* jshint node: true */
 'use strict';
 
+var chalk = require('chalk');
 var fs = require('fs');
 var path = require('path');
 
@@ -85,12 +86,42 @@ module.exports = {
 
     // Import all files in the fonts folder when option not defined or enabled
     if (!('includeFontFiles' in options) || options.includeFontFiles) {
-      fs.readdirSync(fontsPath).forEach(function(fontFilename){
-        target.import(
-          path.join(fontsPath, fontFilename),
-          { destDir:'/fonts' }
-        );
+
+      // Get all of the font files
+      var fontsToImport = fs.readdirSync(fontsPath);
+      var filesInFonts  = []; // Bucket for filenames already in the fonts folder
+      var fontsSkipped  = []; // Bucket for fonts not imported because they already have been
+
+      // Find files already imported into the fonts folder
+      var fontsFolderRegex = /^\/?fonts\/?$/i;
+      target.otherAssetPaths.forEach(function(asset){
+        if (asset.dest && fontsFolderRegex.test(asset.dest)) {
+          filesInFonts.push(asset.file);
+        }
       });
+
+      // Attempt to import each font, if not already imported
+      fontsToImport.forEach(function(fontFilename){
+        if (filesInFonts.indexOf(fontFilename) > -1) {
+          fontsSkipped.push(fontFilename);
+        } else {
+          target.import(
+            path.join(fontsPath, fontFilename),
+            { destDir:'/fonts' }
+          );
+        }
+      });
+
+      // Fonts that had already been imported, so we skipped..
+      if (fontsSkipped.length) {
+        this.ui.writeLine(chalk.red(
+          this.name + ': Fonts already imported into the "/fonts" folder [' + fontsSkipped.join(', ') +
+          '] by another addon or in your ember-cli-build.js, disable the import ' +
+          'from other locations or disable the Font Awesome import by setting ' +
+          '`includeFontFiles:false` for the "' + this.name + '" options in your ember-cli-build.js'
+        ));
+      }
+
     }
   }
 };
