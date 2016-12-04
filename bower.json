@@ -3,8 +3,7 @@
   "dependencies": {
     "ember": "components/ember#canary",
     "ember-cli-shims": "0.1.1",
-    "ember-qunit-notifications": "0.1.0",
-    "font-awesome": "~4.6.0"
+    "ember-qunit-notifications": "0.1.0"
   },
   "resolutions": {
     "ember": "canary"
