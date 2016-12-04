@@ -1,14 +1,15 @@
-/* jshint node: true */
+/* jshint node: true, -W030 */
 'use strict';
 
-var chalk = require('chalk');
-var fs = require('fs');
+// var chalk = require('chalk');
+// var fs = require('fs');
 var path = require('path');
+var stew = require('broccoli-stew');
 
 module.exports = {
   name: 'ember-font-awesome',
 
-  init: function(app) {
+  init: function() {
     this._super.init && this._super.init.apply(this, arguments);
     // Enable ES7 decorators via Babel
     // https://www.npmjs.com/package/ember-computed-decorators#setup-with-addon
@@ -18,6 +19,17 @@ module.exports = {
     if (this.options.babel.optional.indexOf('es7.decorators') === -1) {
       this.options.babel.optional.push('es7.decorators');
     }
+  },
+
+  treeForPublic: function() {
+    return stew.mv(path.join(path.dirname(require.resolve('font-awesome/package.json')), 'fonts'), 'fonts');
+  },
+
+  treeForVendor: function() {
+    return stew.find(path.dirname(require.resolve('font-awesome/package.json')), {
+      destDir: 'font-awesome',
+      include: ['scss/*', 'less/*', 'css/*']
+    });
   },
 
   included: function(app, parentAddon) {
@@ -51,11 +63,11 @@ module.exports = {
     target.options = target.options || {}; // Ensures options exists for Scss/Less below
     var options = target.options['ember-font-awesome'] || {};
 
-    var faPath = path.join(target.bowerDirectory, 'font-awesome');
+    var faPath = 'vendor/font-awesome';
     var scssPath = path.join(faPath, 'scss');
     var lessPath = path.join(faPath, 'less');
     var cssPath = path.join(faPath, 'css');
-    var fontsPath = path.join(faPath, 'fonts');
+//    var fontsPath = 'public/fonts';
 
     // Ensure the font-awesome path is added to the ember-cli-sass addon options
     // (Taking a cue from the Babel options above)
@@ -77,13 +89,13 @@ module.exports = {
       }
     }
 
-    // Make sure font-awesome is available
-    if (!fs.existsSync(faPath)) {
-      throw new Error(
-        this.name + ': font-awesome is not available from bower (' + faPath + '), ' +
-        'install it into your project by running `bower install font-awesome --save`'
-      );
-    }
+    // // Make sure font-awesome is available
+    // if (!fs.existsSync(faPath)) {
+    //   throw new Error(
+    //     this.name + ': font-awesome is not available from npm (' + faPath + '), ' +
+    //     'install it into your project by running `npm install`'
+    //   );
+    // }
 
     // Early out if no assets should be imported
     if ('includeFontAwesomeAssets' in options && !options.includeFontAwesomeAssets) {
@@ -98,43 +110,43 @@ module.exports = {
       });
     }
 
-    // Import all files in the fonts folder when option not defined or enabled
-    if (!('includeFontFiles' in options) || options.includeFontFiles) {
-      // Get all of the font files
-      var fontsToImport = fs.readdirSync(fontsPath);
-      var filesInFonts  = []; // Bucket for filenames already in the fonts folder
-      var fontsSkipped  = []; // Bucket for fonts not imported because they already have been
-
-      // Find files already imported into the fonts folder
-      var fontsFolderPath = options.fontsOutput ? options.fontsOutput : '/fonts';
-      target.otherAssetPaths.forEach(function(asset){
-        if (asset.dest && asset.dest.indexOf(fontsFolderPath) !== -1) {
-          filesInFonts.push(asset.file);
-        }
-      });
-
-      // Attempt to import each font, if not already imported
-      fontsToImport.forEach(function(fontFilename){
-        if (filesInFonts.indexOf(fontFilename) > -1) {
-          fontsSkipped.push(fontFilename);
-        } else {
-          target.import(
-            path.join(fontsPath, fontFilename),
-            { destDir: fontsFolderPath }
-          );
-        }
-      });
-
-      // Fonts that had already been imported, so we skipped..
-      if (fontsSkipped.length) {
-        this.ui.writeLine(chalk.red(
-          this.name + ': Fonts already imported into the "/fonts" folder [' + fontsSkipped.join(', ') +
-          '] by another addon or in your ember-cli-build.js, disable the import ' +
-          'from other locations or disable the Font Awesome import by setting ' +
-          '`includeFontFiles:false` for the "' + this.name + '" options in your ember-cli-build.js'
-        ));
-      }
-
-    }
+    // // Import all files in the fonts folder when option not defined or enabled
+    // if (!('includeFontFiles' in options) || options.includeFontFiles) {
+    //   // Get all of the font files
+    //   var fontsToImport = fs.readdirSync(fontsPath);
+    //   var filesInFonts  = []; // Bucket for filenames already in the fonts folder
+    //   var fontsSkipped  = []; // Bucket for fonts not imported because they already have been
+    //
+    //   // Find files already imported into the fonts folder
+    //   var fontsFolderPath = options.fontsOutput ? options.fontsOutput : '/fonts';
+    //   target.otherAssetPaths.forEach(function(asset){
+    //     if (asset.dest && asset.dest.indexOf(fontsFolderPath) !== -1) {
+    //       filesInFonts.push(asset.file);
+    //     }
+    //   });
+    //
+    //   // Attempt to import each font, if not already imported
+    //   fontsToImport.forEach(function(fontFilename){
+    //     if (filesInFonts.indexOf(fontFilename) > -1) {
+    //       fontsSkipped.push(fontFilename);
+    //     } else {
+    //       target.import(
+    //         path.join(fontsPath, fontFilename),
+    //         { destDir: fontsFolderPath }
+    //       );
+    //     }
+    //   });
+    //
+    //   // Fonts that had already been imported, so we skipped..
+    //   if (fontsSkipped.length) {
+    //     this.ui.writeLine(chalk.red(
+    //       this.name + ': Fonts already imported into the "/fonts" folder [' + fontsSkipped.join(', ') +
+    //       '] by another addon or in your ember-cli-build.js, disable the import ' +
+    //       'from other locations or disable the Font Awesome import by setting ' +
+    //       '`includeFontFiles:false` for the "' + this.name + '" options in your ember-cli-build.js'
+    //     ));
+    //   }
+    //
+    //}
   }
 };
