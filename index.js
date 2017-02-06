@@ -30,7 +30,11 @@ module.exports = {
       include: ['css/*', 'fonts/*', 'less/*', 'scss/*']
     });
 
-    return merge([tree, faTree]);
+    if (tree) {
+      return merge([tree, faTree]);
+    } else {
+      return faTree;
+    }
   },
 
   included: function(app, parentAddon) {
