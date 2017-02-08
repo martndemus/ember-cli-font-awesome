@@ -15,7 +15,7 @@ module.exports = {
   treeForVendor: function(tree) {
     return new Funnel(faPath, {
       destDir: 'font-awesome',
-      include: ['css/*', 'fonts/*', 'less/*', 'scss/*']
+      include: ['css/*', 'fonts/*']
     });
   },
 
