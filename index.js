@@ -13,6 +13,7 @@ module.exports = {
 
   treeForVendor: function() {
     // Get configured fontFormats
+    this.hostBuildOptions = this.hostBuildOptions || {};
     let fontFormats = this.hostBuildOptions.fontFormats || ['eot', 'svg', 'ttf', 'woff', 'woff2', 'otf'];
     let fontFormatsString = fontFormats.join(',');
     // Define fontFormatPattern
