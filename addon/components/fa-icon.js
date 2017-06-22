@@ -28,6 +28,7 @@ const FaIconComponent = Ember.Component.extend({
   ],
 
   attributeBindings: [
+    'ariaLabelAttribute:aria-label',
     'ariaHiddenAttribute:aria-hidden',
     'title',
     'style'
@@ -102,6 +103,10 @@ const FaIconComponent = Ember.Component.extend({
   ariaHiddenAttribute: computed('ariaHidden', function() {
     let ariaHidden = get(this, 'ariaHidden');
     return ariaHidden !== false ? 'true' : undefined;
+  }),
+
+  ariaLabelAttribute: computed('ariaLabel', function() {
+    return get(this, 'ariaLabel');
   })
 });
 
