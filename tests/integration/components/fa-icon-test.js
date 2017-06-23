@@ -168,6 +168,15 @@ test("Setting the inverse property adds the 'fa-inverse' class", function(assert
   });
 });
 
+[['Close Me', 'Close Me'], [null, null], [undefined, undefined]].forEach(([input, result]) => {
+  test(`Setting the aria-label property to '${input}' set the aria-label attribute to '${result}'`, function(assert) {
+    this.set('input', input);
+    this.render(hbs`{{fa-icon icon="fa-credit-card" ariaLabel=input}}`);
+    let $icon = this.$('i');
+    assert.equal($icon.attr('aria-label'), result, `The aria-label attribute of the <i> element should be '${result}`);
+  });
+});
+
 test('I can set the title attribute', function(assert) {
   this.render(hbs`{{fa-icon icon="fa-credit-card" title="foo bar"}}`);
   let $icon = this.$('i');

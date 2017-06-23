@@ -28,6 +28,7 @@ const FaIconComponent = Ember.Component.extend({
   ],
 
   attributeBindings: [
+    'ariaLabel:aria-label',
     'ariaHiddenAttribute:aria-hidden',
     'title',
     'style'
