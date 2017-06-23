@@ -167,6 +167,20 @@ To remove the `aria-hidden` attribute:
 {{fa-icon "star" ariaHidden=false}}
 ```
 
+#### The `aria-label` Attribute
+
+To better support accessibility (i.e. screen readers), the helper adds an
+optional `aria-label` attribute:
+
+```hbs
+{{fa-icon "star" ariaLabel="Click Me"}}
+```
+
+Results in:
+```html
+<i class="fa fa-star" aria-label="Click Me"></i>
+```
+
 #### Actions
 
 You can respond to actions on the icon by passing on action handlers:
