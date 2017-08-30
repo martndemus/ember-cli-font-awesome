@@ -110,7 +110,7 @@ module.exports = {
 
       // Find files already imported into the fonts folder
       var fontsFolderPath = options.fontsOutput ? options.fontsOutput : '/fonts';
-      target.otherAssetPaths.forEach(function(asset){
+      (target.otherAssetPaths || []).forEach(function(asset){
         if (asset.dest && asset.dest.indexOf(fontsFolderPath) !== -1) {
           filesInFonts.push(asset.file);
         }
