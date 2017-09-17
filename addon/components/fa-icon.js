@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import tryMatch from '../utils/try-match';
+import { deprecate } from '@ember/debug';
 
 const {
   computed,
   get,
+  getWithDefault,
   isArray
 } = Ember;
 
@@ -33,6 +35,11 @@ const FaIconComponent = Ember.Component.extend({
     'title',
     'style'
   ],
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.checkDeprecations();
+  },
 
   style: computed('color', function() {
     let color = get(this, 'color');
@@ -103,7 +110,34 @@ const FaIconComponent = Ember.Component.extend({
   ariaHiddenAttribute: computed('ariaHidden', function() {
     let ariaHidden = get(this, 'ariaHidden');
     return ariaHidden !== false ? 'true' : undefined;
-  })
+  }),
+
+  checkDeprecations() {
+    const icon = get(this, 'icon');
+    const params = get(this, 'params');
+
+    const iconOrParam = icon || isArray(params) && params[0];
+    if (iconOrParam) {
+      if (iconOrParam.startsWith('fa-')) {
+        const preferedIcon = iconOrParam.substring(3);
+        deprecate(
+          `Passing the icon prefixed with 'fa-' (${iconOrParam}) is deprecated and will be removed in v4. Use '${preferedIcon}' instead.`,
+          false,
+          { id: 'ember-font-awesome.no-fa-prefix', until: '4.0.0' }
+        );
+      }
+    }
+
+    const size = getWithDefault(this, 'size', '').toString();
+    if (size.endsWith('x')) {
+      const preferedSize = size.substring(0, size.length - 1);
+      deprecate(
+        `Passing 'size' as '${size}' to fa-icon is deprecated and will be removed in v4. Use size='${preferedSize}' instead`,
+        false,
+        { id: 'ember-font-awesome.no-size-suffix', until: '4.0.0' }
+      );
+    }
+  },
 });
 
 FaIconComponent.reopenClass({
