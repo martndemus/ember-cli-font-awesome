@@ -56,7 +56,8 @@
     "configPath": "tests/dummy/config",
     "before": [
       "ember-cli-sass",
-      "ember-cli-less"
+      "ember-cli-less",
+      "broccoli-asset-rev"
     ]
   }
 }
