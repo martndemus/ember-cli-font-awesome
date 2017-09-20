@@ -18,6 +18,9 @@ module.exports = {
       plugin: buildAstTransform(this),
       baseDir() {
         return __dirname;
+      },
+      cacheKey() {
+        return  process.env.EMBER_CLI_FONT_AWESOME_DISABLE_CACHE ? new Date.now() : null;
       }
     });
   },

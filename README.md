@@ -45,6 +45,8 @@ statically. There is a few (edge) cases that we had to drop to achieve that:
 - It requires a Glimmer2 version of Ember (2.10 or bigger)
 - **It requires node >= 6** (working on making it 4.5+ soon)
 - If you use this addon from within another addon, you have to move it from `devDependencies` to `dependencies` in your `package.json`.
+- If you want to ensure the AST transforms of this addon are not being cached, you can use the `EMBER_CLI_FONT_AWESOME_DISABLE_CACHE`
+  environment variables when calling `ember build`
 
 In return you get a an addon with 0 runtime overhead, that ships 0 bytes of javascript code
 and removes the CSS of unused icons in production, yielding to even more saved bytes.
