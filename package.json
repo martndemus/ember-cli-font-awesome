@@ -49,7 +49,6 @@
     "ember-native-dom-helpers": "^0.5.4",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.14.1",
-    "hash-for-dep": "^1.2.0",
     "loader.js": "^4.2.3"
   },
   "engines": {
