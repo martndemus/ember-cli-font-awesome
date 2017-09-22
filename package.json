@@ -27,7 +27,6 @@
     "font-awesome": "^4.7.0",
     "fs-readdir-recursive": "^1.0.0",
     "postcss": "^6.0.9",
-    "hash-for-dep": "^1.2.0",
     "sync-disk-cache": "^1.3.2"
   },
   "devDependencies": {
