@@ -45,14 +45,46 @@ statically. There is a few (edge) cases that we had to drop to achieve that:
 - It requires a Glimmer2 version of Ember (2.10 or bigger)
 - **It requires node >= 6** (working on making it 4.5+ soon)
 - If you use this addon from within another addon, you have to move it from `devDependencies` to `dependencies` in your `package.json`.
-- Please also note if this is used in an addon, you will need to properly configure `ember-try` for older versions of ember.
-  - Specify `ember-font-awesome` as a `peerDependency` in your addon's `ember-try`, using the correct version number according to the table above.
-  - Specify `null` as the value for `ember-font-awesome` in the `dependencies` key for that older version of ember under test, otherwise the test build will not use the version specified as a `peerDependency`
 - If you want to ensure the AST transforms of this addon are not being cached, you can pass a `EMBER_CLI_FONT_AWESOME_DISABLE_CACHE=true`
   environment variable to `ember build`
 
 In return you get a an addon with 0 runtime overhead, that ships 0 bytes of javascript code
 and removes the CSS of unused icons in production, yielding to even more saved bytes.
+
+**NOTE**: If your addon is using `ember-try` to test against versions of ember lower than 2.10, you will need to make some adjustments.
+- Specify `ember-font-awesome` as a `peerDependency` in your addon's `ember-try`, using the correct version number according to the table above.
+- Specify `null` as the value for `ember-font-awesome` in the `dependencies` key for that older version of ember under test, otherwise the test build will not use the version specified as a `peerDependency`
+
+```node
+// config/ember-try.js
+module.exports = {
+  scenarios: [
+    {
+      name: 'ember-lts-2.8',
+      bower: {
+        dependencies: {
+          'ember': 'components/ember#lts-2-8'
+        },
+        resolutions: {
+          'ember': 'lts-2-8'
+        }
+      },
+      npm: {
+        dependencies: {
+          'ember-font-awesome': null // <---
+        },
+        peerDependencies: {
+          'ember-font-awesome': '^3.0.0' // <---
+        },
+        devDependencies: {
+          'ember-source': null
+        }
+      }
+    },
+    ... // other scenarios
+  ]
+};
+```
 
 ### Installing the Add-on
 
