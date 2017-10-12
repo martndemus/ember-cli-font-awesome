@@ -26,7 +26,7 @@ should use:
 Addon version         | Ember version | Addon name
 ----------------------|---------------|-----------------------
 `>= 4.0.0`, `< 5.0.0` | `>= 2.10.0`   | `ember-font-awesome`
-`>= 2.0.0`, `< 3.0.0` | `>= 2.3.0`    | `ember-font-awesome`
+`>= 2.0.0`, `< 4.0.0` | `>= 2.3.0`    | `ember-font-awesome`
 `>= 1.0.0`, `< 2.0.0` | `>= 1.11.0`   | `ember-cli-font-awesome`
 `>= 0.1.0`, `< 1.0.0` | `>= 1.13.0`   | `ember-cli-font-awesome`
 `0.0.9`               | `< 1.11.0`    | `ember-cli-font-awesome`
