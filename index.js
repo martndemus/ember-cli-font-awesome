@@ -34,6 +34,14 @@ module.exports = {
 
   treeForVendor() {
     // Get configured fontFormats
+    if (!this.hostBuildOptions) {
+      this.hostBuildOptions = {};
+      this.ui.writeLine(chalk.red(
+        'ember-font-awesome\'s hostBuildOptions configuration appears to be empty, ' +
+        'please see https://github.com/martndemus/ember-font-awesome/pull/138#issuecomment-310838955 ' +
+        'for additional details.'
+      ));
+    }
     let fontFormats = this.hostBuildOptions.fontFormats || ['eot', 'svg', 'ttf', 'woff', 'woff2', 'otf'];
     let fontFormatsString = fontFormats.join(',');
     // Define fontFormatPattern
