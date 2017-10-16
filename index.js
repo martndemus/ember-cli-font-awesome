@@ -26,7 +26,8 @@ module.exports = {
   },
 
   postprocessTree(type, tree) {
-    if (this.app.env === 'production' && type === 'all') {
+    // if (this.app.env === 'production' && type === 'all') {
+    if (this.fontAwesomeConfig.removeUnusedIcons && type === 'all') {
       return new PruneUnusedIcons(tree, { addon: this });
     }
     return tree;
@@ -34,7 +35,7 @@ module.exports = {
 
   treeForVendor() {
     // Get configured fontFormats
-    let fontFormats = this.hostBuildOptions.fontFormats || ['eot', 'svg', 'ttf', 'woff', 'woff2', 'otf'];
+    let fontFormats = this.fontAwesomeConfig.fontFormats || ['eot', 'svg', 'ttf', 'woff', 'woff2', 'otf'];
     let fontFormatsString = fontFormats.join(',');
     // Define fontFormatPattern
     let fontFormatPattern;
@@ -81,9 +82,10 @@ module.exports = {
     // http://ember-cli.com/extending/#broccoli-build-options-for-in-repo-addons
     let target = (parentAddon || app);
     target.options = target.options || {}; // Ensures options exists for Scss/Less below
-    let options = target.options['ember-font-awesome'] || {};
-
-    this.hostBuildOptions = options;
+    this.fontAwesomeConfig = target.options['ember-font-awesome'] || {};
+    if (!this.fontAwesomeConfig.hasOwnProperty('removeUnusedIcons')) {
+      this.fontAwesomeConfig.removeUnusedIcons = this.app.env === 'production';
+    }
 
     let scssPath = path.join(faPath, 'scss');
     let lessPath = path.join(faPath, 'less');
@@ -93,27 +95,27 @@ module.exports = {
 
     // Ensure the font-awesome path is added to the ember-cli-sass addon options
     // (Taking a cue from the Babel options above)
-    if (options.useScss) {
-      target.options.sassOptions = target.options.sassOptions || {};
-      target.options.sassOptions.includePaths = target.options.sassOptions.includePaths || [];
-      if (target.options.sassOptions.includePaths.indexOf(scssPath) === -1) {
-        target.options.sassOptions.includePaths.push(scssPath);
+    if (this.fontAwesomeConfig.useScss) {
+      this.fontAwesomeConfig.sassOptions = this.fontAwesomeConfig.sassOptions || {};
+      this.fontAwesomeConfig.sassOptions.includePaths = this.fontAwesomeConfig.sassOptions.includePaths || [];
+      if (this.fontAwesomeConfig.sassOptions.includePaths.indexOf(scssPath) === -1) {
+        this.fontAwesomeConfig.sassOptions.includePaths.push(scssPath);
       }
     }
 
     // Ensure the font-awesome path is added to the ember-cli-less addon options
     // (Taking a cue from the Babel options above)
-    if (options.useLess) {
-      target.options.lessOptions = target.options.lessOptions || {};
-      target.options.lessOptions.paths = target.options.lessOptions.paths || [];
-      if (target.options.lessOptions.paths.indexOf(lessPath) === -1) {
-        target.options.lessOptions.paths.push(lessPath);
+    if (this.fontAwesomeConfig.useLess) {
+      this.fontAwesomeConfig.lessOptions = this.fontAwesomeConfig.lessOptions || {};
+      this.fontAwesomeConfig.lessOptions.paths = this.fontAwesomeConfig.lessOptions.paths || [];
+      if (this.fontAwesomeConfig.lessOptions.paths.indexOf(lessPath) === -1) {
+        this.fontAwesomeConfig.lessOptions.paths.push(lessPath);
       }
     }
 
     // Force inclusion of some icons that would otherwise by removed in post processing
-    if ('includeStaticIcons' in options && options.includeStaticIcons.length) {
-      options.includeStaticIcons.forEach(icon => {
+    if ('includeStaticIcons' in this.fontAwesomeConfig && this.fontAwesomeConfig.includeStaticIcons.length) {
+      this.fontAwesomeConfig.includeStaticIcons.forEach(icon => {
         if (icon.indexOf('fa-') !== -1) {
           icon = icon.substring(3);
         }
@@ -122,12 +124,12 @@ module.exports = {
     }
 
     // Early out if no assets should be imported
-    if ('includeFontAwesomeAssets' in options && !options.includeFontAwesomeAssets) {
+    if ('includeFontAwesomeAssets' in this.fontAwesomeConfig && !this.fontAwesomeConfig.includeFontAwesomeAssets) {
       return;
     }
 
     // Import the css when Sass and Less are NOT used
-    if (!options.useScss && !options.useLess) {
+    if (!this.fontAwesomeConfig.useScss && !this.fontAwesomeConfig.useLess) {
       target.import({
         development: path.join(cssPath, 'font-awesome.css'),
         production: path.join(cssPath, 'font-awesome.min.css')
@@ -135,14 +137,14 @@ module.exports = {
     }
 
     // Import all files in the fonts folder when option not defined or enabled
-    if (!('includeFontFiles' in options) || options.includeFontFiles) {
+    if (!('includeFontFiles' in this.fontAwesomeConfig) || this.fontAwesomeConfig.includeFontFiles) {
       // Get all of the font files
       let fontsToImport = fs.readdirSync(absoluteFontsPath);
       let filesInFonts  = []; // Bucket for filenames already in the fonts folder
       let fontsSkipped  = []; // Bucket for fonts not imported because they already have been
 
       // Find files already imported into the fonts folder
-      let fontsFolderPath = options.fontsOutput ? options.fontsOutput : '/fonts';
+      let fontsFolderPath = this.fontAwesomeConfig.fontsOutput ? this.fontAwesomeConfig.fontsOutput : '/fonts';
       (target.otherAssetPaths || []).forEach(function(asset){
         if (asset.dest && asset.dest.indexOf(fontsFolderPath) !== -1) {
           filesInFonts.push(asset.file);
