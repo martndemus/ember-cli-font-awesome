@@ -96,20 +96,20 @@ module.exports = {
     // Ensure the font-awesome path is added to the ember-cli-sass addon options
     // (Taking a cue from the Babel options above)
     if (this.fontAwesomeConfig.useScss) {
-      this.fontAwesomeConfig.sassOptions = this.fontAwesomeConfig.sassOptions || {};
-      this.fontAwesomeConfig.sassOptions.includePaths = this.fontAwesomeConfig.sassOptions.includePaths || [];
-      if (this.fontAwesomeConfig.sassOptions.includePaths.indexOf(scssPath) === -1) {
-        this.fontAwesomeConfig.sassOptions.includePaths.push(scssPath);
+      target.options.sassOptions = target.options.sassOptions || {};
+      target.options.sassOptions.includePaths = target.options.sassOptions.includePaths || [];
+      if (target.options.sassOptions.includePaths.indexOf(scssPath) === -1) {
+        target.options.sassOptions.includePaths.push(scssPath);
       }
     }
 
     // Ensure the font-awesome path is added to the ember-cli-less addon options
     // (Taking a cue from the Babel options above)
     if (this.fontAwesomeConfig.useLess) {
-      this.fontAwesomeConfig.lessOptions = this.fontAwesomeConfig.lessOptions || {};
-      this.fontAwesomeConfig.lessOptions.paths = this.fontAwesomeConfig.lessOptions.paths || [];
-      if (this.fontAwesomeConfig.lessOptions.paths.indexOf(lessPath) === -1) {
-        this.fontAwesomeConfig.lessOptions.paths.push(lessPath);
+      target.options.lessOptions = target.options.lessOptions || {};
+      target.options.lessOptions.paths = target.options.lessOptions.paths || [];
+      if (target.options.lessOptions.paths.indexOf(lessPath) === -1) {
+        target.options.lessOptions.paths.push(lessPath);
       }
     }
 
