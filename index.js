@@ -84,7 +84,7 @@ module.exports = {
     target.options = target.options || {}; // Ensures options exists for Scss/Less below
     this.fontAwesomeConfig = target.options['ember-font-awesome'] || {};
     if (!this.fontAwesomeConfig.hasOwnProperty('removeUnusedIcons')) {
-      this.fontAwesomeConfig.removeUnusedIcons = this.app.env === 'production';
+      this.fontAwesomeConfig.removeUnusedIcons = false; // this.app.env === 'production';
     }
 
     let scssPath = path.join(faPath, 'scss');

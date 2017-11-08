@@ -49,7 +49,7 @@ statically. There is a few (edge) cases that we had to drop to achieve that:
   environment variable to `ember build`
 
 In return you get a an addon with 0 runtime overhead, that ships 0 bytes of javascript code
-and removes the CSS of unused icons in production, yielding to even more saved bytes.
+and (optionally) removes the CSS of unused icons in production, yielding to even more saved bytes.
 
 **NOTE**: If your addon is using `ember-try` to test against versions of ember lower than 2.10, you will need to make some adjustments.
 - Specify `ember-font-awesome` as a `peerDependency` in your addon's `ember-try`, using the correct version number according to the table above.
@@ -348,14 +348,13 @@ var app = new EmberApp({
 
 ### Remove unused icons
 
-This addon includes a functionality to detect the used icons and remove the ones you don't use.
-By default this feature is only enabled when `environment` is `'production'`, but you can force it
-to be enabled or disabled.
+This addon includes an experimental functionality to detect the used icons and remove the ones you don't use.
+By default this feature is disabled, but you enabled when `environment` is `'production'` by doing:
 
 ```js
 var app = new EmberApp({
   'ember-font-awesome': {
-    removeUnusedIcons: false // The addon will not remove unused icons, not even in production.
+    removeUnusedIcons: true // The addon will remove unused icons
   }
 });
 ```
