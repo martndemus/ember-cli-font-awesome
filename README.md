@@ -354,7 +354,7 @@ By default this feature is disabled, but you enabled when `environment` is `'pro
 ```js
 var app = new EmberApp({
   'ember-font-awesome': {
-    removeUnusedIcons: true // The addon will remove unused icons
+    removeUnusedIcons: EmberApp.env() === 'production' // The addon will remove unused icons in production
   }
 });
 ```
