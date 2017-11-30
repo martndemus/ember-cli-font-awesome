@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import tryMatch from '../utils/try-match';
-import { deprecate } from '@ember/debug';
 
 const {
   computed,
+  deprecate,
   get,
   getWithDefault,
   isArray
