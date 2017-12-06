@@ -1,42 +1,35 @@
 import Component from '@ember/component';
 
-import { tagName } from 'ember-decorators/component';
-
 import { argument } from '@ember-decorators/argument';
-import { type, unionOf } from '@ember-decorators/argument/type';
-import { required } from '@ember-decorators/argument/validation';
+import { type, unionOf, optional } from '@ember-decorators/argument/type';
 import { ClosureAction } from '@ember-decorators/argument/types';
 
 import layout from './template';
 
-const optional = (type) => unionOf(type, undefined, null);
-
-const OptionalString = optional('string');
-const OptionalClosureAction = optional(ClosureAction);
-
-@tagName('')
-export default class FaIconComponent extends Component.extend({ layout }) {
+export default class FaIconComponent extends Component.extend({
+  layout,
+  tagName: ''
+}) {
   static positionalParams = ['icon'];
 
   @argument
   @type('string')
-  @required
   icon;
 
   @argument
-  @type(OptionalString)
+  @type(optional('string'))
   id;
 
   @argument
-  @type(OptionalString)
+  @type(optional('string'))
   class;
 
   @argument
-  @type(OptionalString)
+  @type(optional('string'))
   title;
 
   @argument
-  @type(OptionalString)
+  @type(optional('string'))
   ariaLabel;
 
   @argument
@@ -44,32 +37,32 @@ export default class FaIconComponent extends Component.extend({ layout }) {
   ariaHidden = true;
 
   @argument
-  @type(OptionalString)
+  @type(optional('string'))
   color;
 
   @argument
-  @type(OptionalClosureAction)
+  @type(optional(ClosureAction))
   click;
 
   @argument
-  @type(unionOf('number', 'string'))
-  size = 1;
+  @type(optional(unionOf('number', 'string')))
+  size;
 
   @argument
-  @type(OptionalString)
+  @type(optional('string'))
   pull;
 
   @argument
-  @type('number')
-  rotate = 0;
+  @type(optional('number'))
+  rotate;
 
   @argument
-  @type(OptionalString)
+  @type(optional('string'))
   flip;
 
   @argument
-  @type('boolean')
-  stack = false;
+  @type(optional('number'))
+  stack;
 
   @argument
   @type('boolean')
