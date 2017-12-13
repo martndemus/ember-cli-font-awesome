@@ -51,6 +51,31 @@ module.exports = {
     });
   },
 
+  treeForAddon() {
+    const tree = this._super.treeForAddon.apply(this, arguments);
+
+    // Only include JS component, if explicitly enabled
+    if (!this.fontAwesomeConfig.includeComponent) {
+      return new Funnel(tree, {
+        srcDir: this.name,
+        exclude: [/^components\//]
+      });
+    }
+
+    return tree;
+  },
+
+  treeForApp(tree) {
+    // Only include JS component export, if explicitly enabled
+    if (!this.fontAwesomeConfig.includeComponent) {
+      return new Funnel(tree, {
+        exclude: [/^components\//]
+      });
+    }
+
+    return tree;
+  },
+
   included(app, parentAddon) {
     this.fontAwesomeUsage = {};
     this.includeStaticIcons = new Set();
