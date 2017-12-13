@@ -373,6 +373,32 @@ var app = new EmberApp({
 });
 ```
 
+### Add a component for compatibility
+
+Since all invocations of `{{fa-icon}}` are transformed to HTML tags at compile time, there's no need for an actual `{{fa-icon}}` component. Except for one edge case: Passing a component invoked via the `{{component}}` helper.
+
+```hbs
+{{async-button
+  label="Submit"
+  icon=(component "fa-icon" "check")
+}}
+
+{{!-- or just --}}
+
+{{component "fa-icon" "rocket"}}
+```
+
+In your `ember-cli-build.js` you can enable the `includeComponent` option to include an `{{fa-icon}}` component for exactly that use case.
+You will still benefit from all compile time optimizations, however we'll add a bit of additional JS to your asset bundle size.
+
+```js
+var app = new EmberApp({
+  'ember-font-awesome': {
+    includeComponent: true
+  }
+});
+```
+
 ### Output path
 
 You can change the directory where the fonts are copied to using the following configuration:
