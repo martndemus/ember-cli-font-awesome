@@ -31,9 +31,9 @@ Addon version         | Ember version | Addon name
 `>= 0.1.0`, `< 1.0.0` | `>= 1.13.0`   | `ember-cli-font-awesome`
 `0.0.9`               | `< 1.11.0`    | `ember-cli-font-awesome`
 
-### V4.0.0-alpha, important notes
+### V4.0.0, important notes
 
-The version 4.0.0 of this addon introduces an entirely new approach in which the addon contains no components and has 0 runtime overhead. Instead, all usages of `{{fa-icon}}`,
+Version 4.0.0 of this addon introduces an entirely new approach in which the addon contains no components and has 0 runtime overhead. Instead, all usages of `{{fa-icon}}`,
 `{{fa-list}}` and `{{fa-stack}}` are transformed into the right markup in compile-time.
 
 To achieve this we had to make the component a bit more constrained so it can be compiled
