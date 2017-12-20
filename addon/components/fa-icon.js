@@ -118,7 +118,7 @@ const FaIconComponent = Ember.Component.extend({
 
     const iconOrParam = icon || isArray(params) && params[0];
     if (iconOrParam) {
-      if (iconOrParam.startsWith('fa-')) {
+      if (iconOrParam.startsWith && iconOrParam.startsWith('fa-')) {
         const preferedIcon = iconOrParam.substring(3);
         deprecate(
           `Passing the icon prefixed with 'fa-' (${iconOrParam}) is deprecated and will be removed in v4. Use '${preferedIcon}' instead.`,
@@ -129,7 +129,7 @@ const FaIconComponent = Ember.Component.extend({
     }
 
     const size = getWithDefault(this, 'size', '').toString();
-    if (size.endsWith('x')) {
+    if (size.endsWith && size.endsWith('x')) {
       const preferedSize = size.substring(0, size.length - 1);
       deprecate(
         `Passing 'size' as '${size}' to fa-icon is deprecated and will be removed in v4. Use size='${preferedSize}' instead`,
