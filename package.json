@@ -14,7 +14,7 @@
   "repository": "martndemus/ember-font-awesome",
   "scripts": {
     "build": "ember build",
-    "start": "ember server",
+    "start": "ember serve",
     "test": "ember try:each"
   },
   "dependencies": {
@@ -54,7 +54,7 @@
     "loader.js": "^4.2.3"
   },
   "engines": {
-    "node": ">=6"
+    "node": "^4.5 || 6.* || >= 7.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
