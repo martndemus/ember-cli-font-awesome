@@ -107,7 +107,9 @@ This will render:
 ```
 
 To see which icons are available please check the
-[complete list of Font Awesome icons](http://fortawesome.github.io/Font-Awesome/icons/)
+[complete list of Font Awesome icons](https://fontawesome.com/v4.7.0/icons/).
+
+_Note: We are currently [working hard to get to version 5](https://github.com/martndemus/ember-font-awesome/issues/143). Until then we don't support the [Font Awesome 5 icons](https://fontawesome.com/icons?d=gallery)._
 
 The [Font Awesome examples](http://fortawesome.github.io/Font-Awesome/examples/)
 illustrate the various options and their effects. It should be fairly simple to
