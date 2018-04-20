@@ -19,7 +19,7 @@
     "test": "ember try:each"
   },
   "dependencies": {
-    "@ember-decorators/argument": "ember-decorators/argument",
+    "@ember-decorators/argument": "^0.8.13",
     "@ember-decorators/babel-transforms": "^0.1.1",
     "broccoli-filter": "^1.2.4",
     "broccoli-funnel": "^2.0.1",
