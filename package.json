@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@ember-decorators/argument": "^0.8.13",
-    "@ember-decorators/babel-transforms": "^0.1.1",
+    "@ember-decorators/babel-transforms": "^2.0.1",
     "broccoli-filter": "^1.2.4",
     "broccoli-funnel": "^2.0.1",
     "chalk": "^2.3.0",
