@@ -7,21 +7,40 @@ const Funnel = require('broccoli-funnel');
 const faPath = path.dirname(require.resolve('font-awesome/package.json'));
 const buildAstTransform = require('./lib/ast-transform');
 const PruneUnusedIcons = require('./lib/prune-css');
+const { buildCacheKey, FONT_AWESOME_USAGE_CACHE_KEY } = require('./lib/build-time-components/utils');
+const DiskCache = require('sync-disk-cache');
+const persistentFaUsageCache = new DiskCache(buildCacheKey());
 
 module.exports = {
   name: 'ember-font-awesome',
 
   setupPreprocessorRegistry(type, registry) {
-    registry.add('htmlbars-ast-plugin', {
+    persistentFaUsageCache.remove(FONT_AWESOME_USAGE_CACHE_KEY);
+    let pluginObj = this._buildPlugin();
+    pluginObj.parallelBabel = {
+      requireFile: __filename,
+      buildUsing: '_buildPlugin',
+      params: {}
+    }
+    registry.add("htmlbars-ast-plugin", pluginObj);
+  },
+
+  _buildPlugin() {
+    return {
       name: 'font-awesome-static-transform',
-      plugin: buildAstTransform(this),
+      plugin: buildAstTransform,
       baseDir() {
         return __dirname;
       },
       cacheKey() {
         return  process.env.EMBER_CLI_FONT_AWESOME_DISABLE_CACHE ? Date.now() : null;
       }
-    });
+    };
+  },
+
+  preBuild(result) {
+    persistentFaUsageCache.set('fa-config', JSON.stringify(this.fontAwesomeConfig));
+    return result;
   },
 
   postprocessTree(type, tree) {
@@ -76,7 +95,6 @@ module.exports = {
   },
 
   included(app, parentAddon) {
-    this.fontAwesomeUsage = {};
     this.includeStaticIcons = new Set();
     // Quick fix for add-on nesting
     // https://github.com/aexmachina/ember-cli-sass/blob/v5.3.0/index.js#L73-L75
