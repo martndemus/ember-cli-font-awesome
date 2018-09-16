@@ -24,7 +24,7 @@
     "broccoli-filter": "^1.2.4",
     "broccoli-funnel": "^2.0.1",
     "chalk": "^2.3.0",
-    "ember-ast-helpers": "0.3.5",
+    "ember-ast-helpers": "0.4.0",
     "ember-cli-babel": "^6.11.0",
     "ember-cli-htmlbars": "^2.0.2",
     "font-awesome": "^4.7.0",
