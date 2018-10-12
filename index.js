@@ -110,6 +110,13 @@ module.exports = {
     if (!this.fontAwesomeConfig.hasOwnProperty('removeUnusedIcons')) {
       this.fontAwesomeConfig.removeUnusedIcons = false; // this.app.env === 'production';
     }
+    if (this.fontAwesomeConfig.removeUnusedIcons) {
+      this.ui.writeLine(chalk.yellow(`
+        ${this.name}: Removing unused icons is still experimental and not recommended
+        in any production environment. Take this warning seriously. Test your
+        application before enabling this feature and report any bugs.
+      `));
+    }
 
     let scssPath = path.join(faPath, 'scss');
     let lessPath = path.join(faPath, 'less');
